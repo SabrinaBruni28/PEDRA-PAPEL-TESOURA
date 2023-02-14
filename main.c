@@ -30,19 +30,25 @@ int Final(){
     return 0;
 }
 
+/*Funcao principal que conecta tudo.*/
 int main(){
     Jogo jog;
     int estado;
     estado = Comeco();
+    /*Laco que mantem o jogo ativo.*/
     while(estado){
+        /*Estrutura condicional que roda os estados do jogo.*/
         switch (estado){
+            /*Inicializa o jogo.*/
             case 1:
                 Inicializa_Pontuacao(&jog);
                 estado = 2;
                 break;
+            /*A jogada.*/
             case 2:
                 if(Jogada(&jog)) estado = 3;
                 break;
+            /*Finalizacao do jogo.*/
             case 3:
                 estado = Final();
                 break;

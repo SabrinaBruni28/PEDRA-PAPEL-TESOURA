@@ -20,26 +20,22 @@ int Jogada(Jogo* jog){
     return Contador_Pontos(jog, Resultado(jog));
 }
 
-int Sorteia(Jogo* jog){
+void Sorteia(Jogo* jog){
     int numero;
     srand( (unsigned)time(NULL) );
     numero = rand()%3;
     switch (numero){
     case 0:
         Copia_Caractere(&jog->sorteia,PEDRA);
-        return 1;
         break;
     case 1:
         Copia_Caractere(&jog->sorteia, PAPEL);
-        return 1;
         break;
     case 2:
         Copia_Caractere(&jog->sorteia, TESOURA);
-        return 1;
         break;
     default:
         printf("e ate o numero entao ein\n");
-        return 0;
         break;
     }
 }
@@ -88,22 +84,26 @@ int Contador_Pontos(Jogo* jog, int n){
         break;
     }
     Print_Jogada(jog);
+    return Fim_Jogo(jog);
+}
+
+int Fim_Jogo(Jogo* jog){
     if(jog->computador == MAX){
-        Fim_Jogo(jog, 2);
+        Quem_Ganhou(jog, 2);
         return 1;
     }
     else if(jog->jogador == MAX){ 
-        Fim_Jogo(jog, 1);
+        Quem_Ganhou(jog, 1);
         return 1;
     }
     else if(jog->empate == MAX){
-        Fim_Jogo(jog, 3);
+        Quem_Ganhou(jog, 3);
         return 1;
     }
     return 0;
 }
 
-void Fim_Jogo(Jogo* jog, int n){
+void Quem_Ganhou(Jogo* jog, int n){
     switch (n){
     case 1:
         printf("\n\033[1;32m********** VOCE GANHOU!!!!!! **********\n\n\033[m");
@@ -118,7 +118,6 @@ void Fim_Jogo(Jogo* jog, int n){
 }
 
 void Print_Jogada(Jogo* jog){
-
     printf("\n\033[1mVoce: %c\t\t\t Pontuacao:\n\033[m", jog->joga);
     printf("\033[1mComputador: %c\t\t voce: %d  computador: %d  empatado: %d\n\n\033[m", jog->sorteia, jog->jogador, jog->computador, jog->empate);
 }
